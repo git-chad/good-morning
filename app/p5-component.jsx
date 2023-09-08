@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useRef } from "react";
+import dynamic from 'next/dynamic';
 import p5 from "p5";
 
-export default function P5Component() {
+ const P5Component = () => {
 
   const wrapper = useRef();
   const p5Instance = useRef(null);
@@ -151,3 +152,7 @@ export default function P5Component() {
     </main>
   );
 }
+
+export default dynamic(() => Promise.resolve(P5Component), {
+    ssr: false
+  });
