@@ -3,9 +3,10 @@ import React, { useEffect, useRef } from "react";
 import p5 from "p5";
 
 export default function Home() {
+
   const wrapper = useRef();
+  const p5Instance = useRef(null);
   let spaceGrotesk;
-  let p5Instance;
   let graphic;
 
   const hueRef = useRef(0);
@@ -67,11 +68,14 @@ export default function Home() {
   };
 
   useEffect(() => {
-    p5Instance = new p5(sketch, wrapper.current);
+    p5Instance.current = new p5(sketch, wrapper.current);
     return () => {
-      p5Instance.remove();
+      if (p5Instance.current) {
+        p5Instance.current.remove();
+      }
     };
-  }, []);
+}, []);
+
 
   return (
     <main className="w-screen h-screen bg-[#101917]">
@@ -96,7 +100,7 @@ export default function Home() {
             defaultValue="0"
             onChange={(e) => {
               hueRef.current = e.target.value;
-              createGraphic(p5Instance);
+              createGraphic(p5Instance.current);
             }}
           />
           <input
@@ -107,7 +111,7 @@ export default function Home() {
             defaultValue="1"
             onChange={(e) => {
               xRef.current = e.target.value;
-              createGraphic(p5Instance);
+              createGraphic(p5Instance.current);
             }}
           />
           <input
@@ -118,7 +122,7 @@ export default function Home() {
             defaultValue="1"
             onChange={(e) => {
               yRef.current = e.target.value;
-              createGraphic(p5Instance);
+              createGraphic(p5Instance.current);
             }}
           />
 
@@ -129,7 +133,7 @@ export default function Home() {
             defaultValue={firstWordRef.current}
             onChange={(e) => {
               firstWordRef.current = e.target.value;
-              createGraphic(p5Instance);
+              createGraphic(p5Instance.current);
             }}
           ></input>
           <input
@@ -138,7 +142,7 @@ export default function Home() {
             defaultValue={secondWordRef.current}
             onChange={(e) => {
               secondWordRef.current = e.target.value;
-              createGraphic(p5Instance);
+              createGraphic(p5Instance.current);
             }}
           ></input>
         </div>
